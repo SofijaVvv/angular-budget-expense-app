@@ -1,6 +1,6 @@
-import { User } from '../../models/user.model';
+import { User } from '../../../models/user.model';
 
-export interface AuthState {
+export interface LoginState {
   user: User | null;
   isAuthenticated: boolean;
   loading: boolean;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable, tap } from 'rxjs';
 import { JwtService } from './jwt.service';
 import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
@@ -18,22 +18,33 @@ export class UserService {
   ) {}
 
   login(credentials: { email: string; password: string }): Observable<User> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    console.log('Login Credentials:', credentials);
     return this.http
       .post<{
         token: string;
         user: User;
-      }>(`${this.baseUrl}/api/Users/Login`, credentials, { headers })
+      }>(`${this.baseUrl}/api/Users/Login`, credentials)
       .pipe(
-        map((response) => {
-          const token = response.token;
-          this.localStorage.saveToken(token);
-          console.log(response.user);
-          return response.user;
+        tap((response) => {
+          this.localStorage.saveToken(response.token);
         }),
+        map((response) => response.user),
+      );
+  }
+
+  register(credentials: {
+    email: string;
+    password: string;
+    fullName: string;
+  }): Observable<string> {
+    return this.http
+      .post<{
+        message: string;
+      }>(`${this.baseUrl}/api/Users/Register`, credentials)
+      .pipe(
+        tap((response) => {
+          console.log(response.message);
+        }),
+        map((response) => response.message),
       );
   }
 
