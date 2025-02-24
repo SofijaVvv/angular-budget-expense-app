@@ -9,7 +9,6 @@ export class AuthFacade {
   constructor(private store: Store) {}
 
   login(credentials: { email: string; password: string }) {
-    console.log('Dispatching login with credentials:', credentials);
     this.store.dispatch(login({ credentials }));
   }
 

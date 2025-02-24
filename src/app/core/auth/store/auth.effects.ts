@@ -11,8 +11,8 @@ export class AuthEffects {
     private userService: UserService,
   ) {}
 
-  login$ = createEffect(() =>
-    this.actions$.pipe(
+  login$ = createEffect(() => {
+    return this.actions$.pipe(
       ofType(login),
       mergeMap((action) =>
         this.userService.login(action.credentials).pipe(
@@ -20,6 +20,6 @@ export class AuthEffects {
           catchError((error) => of(loginFailure({ error: error.message }))),
         ),
       ),
-    ),
-  );
+    );
+  });
 }

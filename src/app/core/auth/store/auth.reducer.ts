@@ -11,22 +11,31 @@ export const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
-  on(login, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
-  on(loginSuccess, (state) => ({
-    ...state,
-    isAuthenticated: true,
-    loading: false,
-    error: null,
-  })),
-  on(loginFailure, (state, { error }) => ({
-    ...state,
-    isAuthenticated: false,
-    loading: false,
-    error,
-  })),
-  on(logout, () => initialState),
+  on(
+    login,
+    (state): AuthState => ({
+      ...state,
+      loading: true,
+      error: null,
+    }),
+  ),
+  on(
+    loginSuccess,
+    (state): AuthState => ({
+      ...state,
+      isAuthenticated: true,
+      loading: false,
+      error: null,
+    }),
+  ),
+  on(
+    loginFailure,
+    (state, { error }): AuthState => ({
+      ...state,
+      isAuthenticated: false,
+      loading: false,
+      error,
+    }),
+  ),
+  on(logout, (): AuthState => initialState),
 );
