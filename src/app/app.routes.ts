@@ -14,4 +14,8 @@ export const routes: Routes = [
     path: 'register',
     loadComponent: () => import('./core/auth/auth.component'),
   },
+  {
+    path: 'home',
+    loadComponent: () => import('./featured/pages/home/home.component'),
+  },
 ];
