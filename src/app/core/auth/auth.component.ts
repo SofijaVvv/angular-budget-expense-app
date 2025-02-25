@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { AuthFacade } from './services/auth.facade';
+import { UserFacade } from './services/user.facade';
 
 @Component({
   selector: 'app-auth',
@@ -10,10 +10,19 @@ import { AuthFacade } from './services/auth.facade';
   styleUrl: './auth.component.sass',
 })
 export default class AuthComponent {
-  constructor(private authFacade: AuthFacade) {}
+  constructor(private authFacade: UserFacade) {}
 
   onLogin() {
-    const credentials = { email: 'user', password: 'a' };
+    const credentials = { email: 'user', password: 'aa' };
     this.authFacade.login(credentials);
+  }
+
+  onRegister() {
+    const credentials = {
+      email: 'user',
+      fullName: 'sadasdasdgdfhdrt6ny6rt',
+      password: 'rrrrrr',
+    };
+    this.authFacade.register(credentials);
   }
 }

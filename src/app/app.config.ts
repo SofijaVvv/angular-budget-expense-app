@@ -8,13 +8,16 @@ import { provideStore } from '@ngrx/store';
 import { loginReducer } from './core/auth/store/login/login.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { LoginEffects } from './core/auth/store/login/login.effects';
+import { registerReducer } from './core/auth/store/register/register.reducer';
+import { RegisterEffects } from './core/auth/store/register/register.effects';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore({ login: loginReducer }),
-    provideEffects([LoginEffects]),
-    provideHttpClient(withInterceptors([tokenInterceptor])),
+    provideStore({ login: loginReducer, register: registerReducer }),
+    provideEffects([LoginEffects, RegisterEffects]),
+    provideHttpClient(withInterceptors([tokenInterceptor, errorInterceptor])),
   ],
 };

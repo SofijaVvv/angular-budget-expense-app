@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { JwtService } from './jwt.service';
 import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
@@ -33,19 +33,14 @@ export class UserService {
 
   register(credentials: {
     email: string;
-    password: string;
     fullName: string;
+    password: string;
   }): Observable<string> {
     return this.http
       .post<{
         message: string;
       }>(`${this.baseUrl}/api/Users/Register`, credentials)
-      .pipe(
-        tap((response) => {
-          console.log(response.message);
-        }),
-        map((response) => response.message),
-      );
+      .pipe(map((response) => response.message));
   }
 
   logout() {
