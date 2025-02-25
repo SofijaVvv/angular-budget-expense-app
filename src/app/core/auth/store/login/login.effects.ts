@@ -3,7 +3,6 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { login, loginFailure, loginSuccess } from './login.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { UserService } from '../../services/user.service';
-import { registerFailure } from '../register/register.actions';
 
 @Injectable()
 export class LoginEffects {
