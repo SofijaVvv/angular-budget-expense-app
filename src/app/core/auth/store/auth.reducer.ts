@@ -1,19 +1,19 @@
-import { LoginState } from './login.state';
+import { AuthState } from './auth.state';
 import { createReducer, on } from '@ngrx/store';
-import { login, loginFailure, loginSuccess, logout } from './login.actions';
+import { login, loginFailure, loginSuccess, logout } from './auth.actions';
 
-export const initialState: LoginState = {
+export const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
   loading: false,
   error: null,
 };
 
-export const loginReducer = createReducer(
+export const authReducer = createReducer(
   initialState,
   on(
     login,
-    (state): LoginState => ({
+    (state): AuthState => ({
       ...state,
       loading: true,
       error: null,
@@ -21,7 +21,7 @@ export const loginReducer = createReducer(
   ),
   on(
     loginSuccess,
-    (state, { user }): LoginState => ({
+    (state, { user }): AuthState => ({
       ...state,
       user,
       isAuthenticated: true,
@@ -31,12 +31,12 @@ export const loginReducer = createReducer(
   ),
   on(
     loginFailure,
-    (state, { error }): LoginState => ({
+    (state, { error }): AuthState => ({
       ...state,
       isAuthenticated: false,
       loading: false,
       error,
     }),
   ),
-  on(logout, (): LoginState => initialState),
+  on(logout, (): AuthState => initialState),
 );

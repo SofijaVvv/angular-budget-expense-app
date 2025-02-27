@@ -40,7 +40,12 @@ export class UserService {
       .post<{
         message: string;
       }>(`${this.baseUrl}/api/Users/Register`, credentials)
-      .pipe(map((response) => response.message));
+      .pipe(
+        tap((response) => {
+          console.log('Registration message:', response.message);
+        }),
+        map((response) => response.message),
+      );
   }
 
   logout() {

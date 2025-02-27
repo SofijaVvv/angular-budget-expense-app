@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { NgClass, NgOptimizedImage } from '@angular/common';
-import { UserFacade } from './services/user.facade';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AsyncPipe, NgClass, NgIf, NgOptimizedImage } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { UserService } from './services/user.service';
+import { UserFacade } from './services/user.facade';
+import { Subscription } from 'rxjs';
 
 interface AuthForm {
   email: FormControl<string>;
@@ -18,16 +20,28 @@ interface AuthForm {
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [NgOptimizedImage, RouterLink, ReactiveFormsModule, NgClass],
+  imports: [
+    NgOptimizedImage,
+    RouterLink,
+    ReactiveFormsModule,
+    NgClass,
+    AsyncPipe,
+    NgIf,
+  ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.sass',
 })
-export default class AuthComponent implements OnInit {
+export default class AuthComponent implements OnInit, OnDestroy {
   authType = '';
   authForm: FormGroup<AuthForm>;
+  loginError: string | null = null;
+  registerError: string | null = null;
+  private readonly authErrorSubscription: Subscription;
   constructor(
-    private authFacade: UserFacade,
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
+    private userFacade: UserFacade,
+    private userService: UserService,
+    private router: Router,
   ) {
     this.authForm = new FormGroup<AuthForm>({
       email: new FormControl('', {
@@ -39,10 +53,32 @@ export default class AuthComponent implements OnInit {
         nonNullable: true,
       }),
     });
+
+    this.authErrorSubscription = this.userFacade.authError$.subscribe(
+      (error) => {
+        this.loginError = error;
+      },
+    );
   }
 
   ngOnInit() {
-    this.authType = this.route.snapshot.url.at(-1)!.path;
+    this.authType = this.activatedRoute.snapshot.url.at(-1)!.path;
+    this.initializeForm();
+    this.resetErrors();
+  }
+
+  ngOnDestroy() {
+    if (this.authErrorSubscription) {
+      this.authErrorSubscription.unsubscribe();
+    }
+  }
+
+  private resetErrors() {
+    this.loginError = null;
+    this.registerError = null;
+  }
+
+  private initializeForm() {
     if (this.authType === 'register') {
       this.authForm.addControl(
         'fullName',
@@ -63,7 +99,7 @@ export default class AuthComponent implements OnInit {
       email: string;
       password: string;
     };
-    this.authFacade.login(credentials);
+    this.userFacade.login(credentials);
   }
 
   onRegister() {
@@ -72,6 +108,14 @@ export default class AuthComponent implements OnInit {
       fullName: string;
       password: string;
     };
-    this.authFacade.register(credentials);
+    this.userService.register(credentials).subscribe({
+      next: () => {
+        void this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        this.registerError =
+          err?.error?.message || 'Registration failed: user already exists.';
+      },
+    });
   }
 }
