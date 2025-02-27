@@ -1,102 +1,100 @@
-<div class="bg-gray-50">
-  <div
-    class="flex flex-col items-center justify-center px-6 py-8 h-screen lg:py-0"
-  >
-    <a class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
-      <img
-        class="w-8 h-8 mr-2"
-        ngSrc="./assets/images/logo.png"
-        alt="logo"
-        height="512"
-        width="512"
-      />
-      Budget.io
-    </a>
-    <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <h1
-          class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl"
-        >
-          Sign in to your account
-        </h1>
-        <form
-          [formGroup]="authForm"
-          (ngSubmit)="onSubmit()"
-          class="space-y-4 md:space-y-6"
-        >
+<div
+  class="flex bg-gray-50 flex-col items-center justify-center px-6 py-8 h-screen lg:py-0"
+>
+  <a class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
+    <img
+      class="w-8 h-8 mr-2"
+      ngSrc="./assets/images/logo.png"
+      alt="logo"
+      height="512"
+      width="512"
+    />
+    Budget.io
+  </a>
+  <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+      <h1
+        class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl"
+      >
+        Sign in to your account
+      </h1>
+      <form
+        [formGroup]="authForm"
+        (ngSubmit)="onSubmit()"
+        class="space-y-4 md:space-y-6"
+      >
+        <div class="flex flex-col gap-1">
+          <label class="text-sm font-medium text-gray-900">Your email</label>
+          <input
+            formControlName="email"
+            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+            placeholder="Email"
+          />
+        </div>
+        @if (authType === "register") {
           <div class="flex flex-col gap-1">
-            <label class="text-sm font-medium text-gray-900">Your email</label>
+            <label class="text-sm font-medium text-gray-900"
+              >Your full name</label
+            >
             <input
-              formControlName="email"
+              formControlName="fullName"
               class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="Email"
+              placeholder="Name"
             />
           </div>
-          @if (authType === "register") {
-            <div class="flex flex-col gap-1">
-              <label class="text-sm font-medium text-gray-900"
-                >Your full name</label
-              >
-              <input
-                formControlName="fullName"
-                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                placeholder="Name"
-              />
-            </div>
-          }
+        }
+        <div class="flex flex-col gap-1">
           <div class="flex flex-col gap-1">
-            <div class="flex flex-col gap-1">
-              <label class="text-sm font-medium text-gray-900">Password</label>
-              <input
-                formControlName="password"
-                placeholder="Password"
-                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              />
-            </div>
-
-            @if (authType === "register") {
-              <div *ngIf="registerError" class="text-red-600 text-sm">
-                {{ registerError }}
-              </div>
-            } @else {
-              <div *ngIf="loginError" class="text-red-600 text-sm">
-                {{ loginError }}
-              </div>
-            }
+            <label class="text-sm font-medium text-gray-900">Password</label>
+            <input
+              formControlName="password"
+              placeholder="Password"
+              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+            />
           </div>
-          <button
-            type="submit"
-            [ngClass]="{
-              'bg-blue-500 hover:bg-primary-700': authForm.valid,
-              'bg-blue-400 cursor-not-allowed': !authForm.valid,
-            }"
-            [disabled]="!authForm.valid"
-            class="w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          >
-            Sign in
-          </button>
-          @if (authType === "login") {
-            <p class="text-sm font-light text-gray-500">
-              Don’t have an account yet?
-              <a
-                [routerLink]="['/register']"
-                class="font-medium text-gray-600 cursor-pointer text-primary-600 hover:underline"
-                >Sign up</a
-              >
-            </p>
-          }
+
           @if (authType === "register") {
-            <p class="text-sm font-light text-gray-500">
-              Already have an account?
-              <a
-                [routerLink]="['/login']"
-                class="font-medium text-gray-600 cursor-pointer text-primary-600 hover:underline"
-                >Sign in</a
-              >
-            </p>
+            <div *ngIf="registerError" class="text-red-600 text-sm">
+              {{ registerError }}
+            </div>
+          } @else {
+            <div *ngIf="loginError" class="text-red-600 text-sm">
+              {{ loginError }}
+            </div>
           }
-        </form>
-      </div>
+        </div>
+        <button
+          type="submit"
+          [ngClass]="{
+            'bg-blue-500 hover:bg-primary-700': authForm.valid,
+            'bg-blue-400 cursor-not-allowed': !authForm.valid,
+          }"
+          [disabled]="!authForm.valid"
+          class="w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        >
+          Sign in
+        </button>
+        @if (authType === "login") {
+          <p class="text-sm font-light text-gray-500">
+            Don’t have an account yet?
+            <a
+              [routerLink]="['/register']"
+              class="font-medium text-gray-600 cursor-pointer text-primary-600 hover:underline"
+              >Sign up</a
+            >
+          </p>
+        }
+        @if (authType === "register") {
+          <p class="text-sm font-light text-gray-500">
+            Already have an account?
+            <a
+              [routerLink]="['/login']"
+              class="font-medium text-gray-600 cursor-pointer text-primary-600 hover:underline"
+              >Sign in</a
+            >
+          </p>
+        }
+      </form>
     </div>
   </div>
 </div>

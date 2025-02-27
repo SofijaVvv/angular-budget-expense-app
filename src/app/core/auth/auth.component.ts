@@ -29,7 +29,6 @@ interface AuthForm {
     NgIf,
   ],
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.sass',
 })
 export default class AuthComponent implements OnInit, OnDestroy {
   authType = '';
