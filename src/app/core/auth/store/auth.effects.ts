@@ -19,10 +19,6 @@ export class AuthEffects {
       mergeMap((action) => {
         return this.userService.login(action.credentials).pipe(
           map((user) => loginSuccess({ user })),
-          tap(() => {
-            localStorage.setItem('isAuthenticated', 'true');
-            void this.router.navigate(['/home']);
-          }),
           catchError((error) => {
             let errorMessage = 'An unexpected error occurred';
             if (error.status === 400 || error.status === 404) {
@@ -34,6 +30,17 @@ export class AuthEffects {
       }),
     );
   });
+
+  loginSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loginSuccess),
+        tap(() => {
+          void this.router.navigate(['/home']);
+        }),
+      ),
+    { dispatch: false },
+  );
 
   logout$ = createEffect(
     () =>

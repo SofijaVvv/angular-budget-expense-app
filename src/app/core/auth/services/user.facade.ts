@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { login, logout } from '../store/auth.actions';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 import {
   selectAuthError,
@@ -21,12 +21,7 @@ export class UserFacade {
     selectIsAuthenticated,
   );
 
-  constructor(private store: Store) {
-    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-    this.isAuthenticated$ = isAuthenticated
-      ? of(true)
-      : this.store.select(selectIsAuthenticated);
-  }
+  constructor(private store: Store) {}
 
   login(credentials: { email: string; password: string }) {
     this.store.dispatch(login({ credentials }));

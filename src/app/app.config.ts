@@ -16,15 +16,19 @@ import { environment } from '../environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthEffects } from './core/auth/store/auth.effects';
 import { authReducer } from './core/auth/store/auth.reducer';
+import { localStorageSyncReducer } from './store/local-storage.reducer';
+
+const reducers = {
+  auth: authReducer,
+  router: routerReducer,
+};
+const metaReducers = [localStorageSyncReducer];
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore({
-      login: authReducer,
-      router: routerReducer,
-    }),
+    provideStore(reducers, { metaReducers }),
     provideEffects([AuthEffects]),
     provideHttpClient(withInterceptors([tokenInterceptor, errorInterceptor])),
     importProvidersFrom(StoreRouterConnectingModule.forRoot()),
