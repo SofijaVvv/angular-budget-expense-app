@@ -34,11 +34,7 @@ export class SidebarComponent implements OnInit {
       icon: './assets/images/transactions.svg',
       route: '/transactions',
     },
-    {
-      label: 'Budget',
-      icon: './assets/images/budget.svg',
-      route: '/budget',
-    },
+    { label: 'Budget', icon: './assets/images/budget.svg', route: '/budget' },
     {
       label: 'Account',
       icon: './assets/images/account.svg',
