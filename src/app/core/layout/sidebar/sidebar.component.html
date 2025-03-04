@@ -17,8 +17,8 @@
     class="flex items-center mb-6 py-4 border-b text-2xl font-semibold text-gray-900"
   >
     <img
-      class="w-8 h-8 mr-2"
-      src="./assets/images/logo.png"
+      class="w-12 h-12 mr-2"
+      src="./assets/images/logo.svg"
       alt="logo"
       height="512"
       width="512"
@@ -38,7 +38,10 @@
   </div>
 </aside>
 
-<div class="md:hidden sticky top-0 left-0 bg-white shadow-md p-2 z-30">
+<div
+  *ngIf="isAuthenticated"
+  class="md:hidden sticky top-0 left-0 bg-white shadow-md p-2 z-30"
+>
   <button
     (click)="toggleSidebar()"
     class="text-gray-500 p-3 border-2 rounded hover:text-gray-900"

@@ -18,4 +18,17 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./features/home/home.component'),
   },
+  {
+    path: 'account',
+    loadComponent: () => import('./features/account/account.component'),
+  },
+  {
+    path: 'budget',
+    loadComponent: () => import('./features/budget/budget.component'),
+  },
+  {
+    path: 'transactions',
+    loadComponent: () =>
+      import('./features/transactions/transactions.component'),
+  },
 ];

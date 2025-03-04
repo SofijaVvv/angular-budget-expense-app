@@ -25,7 +25,24 @@ import { SidebarLinkComponent } from '../sidebar-link/sidebar-link.component';
 export class SidebarComponent implements OnInit {
   isAuthenticated: boolean = false;
   isSidebarOpen = false;
-  links = [{ label: 'Home', icon: './assets/images/home.svg', route: '/home' }];
+  links = [
+    { label: 'Home', icon: './assets/images/home.svg', route: '/home' },
+    {
+      label: 'Transactions',
+      icon: './assets/images/transactions.svg',
+      route: '/transactions',
+    },
+    {
+      label: 'Budget',
+      icon: './assets/images/budget.svg',
+      route: '/budget',
+    },
+    {
+      label: 'Account',
+      icon: './assets/images/account.svg',
+      route: '/account',
+    },
+  ];
 
   constructor(private userFacade: UserFacade) {}
 

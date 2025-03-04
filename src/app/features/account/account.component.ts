@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './account.component.html',
 })
-export class AccountComponent {}
+export default class AccountComponent {}

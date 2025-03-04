@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './budget.component.html',
 })
-export class BudgetComponent {}
+export default class BudgetComponent {}
