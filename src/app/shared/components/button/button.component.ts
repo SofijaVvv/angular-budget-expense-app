@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 type ButtonColor = 'blue' | 'gray' | 'red';
@@ -14,7 +14,7 @@ type ButtonBorderRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export class ButtonComponent {
   @Input() label: string = 'Click Me';
   @Input() color: ButtonColor = 'blue';
-  @Input() onClick: () => void = () => {};
+  @Output() buttonClick = new EventEmitter<void>();
   @Input() size: ButtonSize = 'medium';
   @Input() fullWidth: boolean = false;
   @Input() borderRadius: ButtonBorderRadius = 'md';
@@ -39,4 +39,8 @@ export class ButtonComponent {
     xl: 'rounded-xl',
     '2xl': 'rounded-2xl',
   };
+
+  handleClick(): void {
+    this.buttonClick.emit();
+  }
 }

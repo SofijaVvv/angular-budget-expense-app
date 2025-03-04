@@ -8,6 +8,7 @@ import {
 } from '@angular/common';
 import { UserFacade } from '../../auth/services/user.facade';
 import { SidebarLinkComponent } from '../sidebar-link/sidebar-link.component';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-layout-navbar',
@@ -19,6 +20,7 @@ import { SidebarLinkComponent } from '../sidebar-link/sidebar-link.component';
     NgClass,
     SidebarLinkComponent,
     NgForOf,
+    ButtonComponent,
   ],
   templateUrl: './sidebar.component.html',
 })
@@ -54,5 +56,9 @@ export class SidebarComponent implements OnInit {
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  onLogOut() {
+    this.userFacade.logout();
   }
 }
