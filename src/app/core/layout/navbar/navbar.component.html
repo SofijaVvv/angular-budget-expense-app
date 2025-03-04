@@ -1,12 +1,18 @@
+<div
+  *ngIf="isSidebarOpen"
+  class="fixed inset-0 bg-black opacity-50 z-40"
+  (click)="toggleSidebar()"
+></div>
+
 <aside
   *ngIf="isAuthenticated"
   [ngClass]="{
-    block: isSidebarOpen,
-    hidden: !isSidebarOpen,
-    'fixed inset-0 z-50 flex flex-col w-64 px-4 py-4 bg-white  border-r border-gray-200 md:relative md:translate-x-0 md:top-0 md:flex md:h-screen': true,
+    'fixed inset-0 z-50 flex flex-col w-64 px-4 py-4 bg-white border-r border-gray-200 md:relative md:translate-x-0 md:top-0 md:flex md:h-screen': true,
+    'transform transition-transform duration-300 ease-in-out': true,
+    'translate-x-0': isSidebarOpen,
+    '-translate-x-full': !isSidebarOpen,
   }"
 >
-  <button>close</button>
   <a
     class="flex items-center mb-6 py-4 border-b text-2xl font-semibold text-gray-900"
   >
@@ -46,7 +52,7 @@
   </div>
 </aside>
 
-<div class="md:hidden sticky top-0 left-0 bg-white shadow-md p-2">
+<div class="md:hidden sticky top-0 left-0 bg-white shadow-md p-2 z-30">
   <button
     (click)="toggleSidebar()"
     class="text-gray-500 p-3 border-2 rounded hover:text-gray-900"
