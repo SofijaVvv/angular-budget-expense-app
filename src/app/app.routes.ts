@@ -16,6 +16,6 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    loadComponent: () => import('./featured/pages/home/home.component'),
+    loadComponent: () => import('./features/pages/home/home.component'),
   },
 ];
