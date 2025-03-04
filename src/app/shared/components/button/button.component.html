@@ -1,0 +1,11 @@
+<button
+  [ngClass]="[
+    colorClasses[color],
+    sizeClasses[size],
+    borderRadiusClasses[borderRadius],
+    fullWidth ? 'w-full' : '',
+  ]"
+  (click)="onClick()"
+>
+  {{ label }}
+</button>

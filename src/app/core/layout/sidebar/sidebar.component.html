@@ -7,7 +7,7 @@
 <aside
   *ngIf="isAuthenticated"
   [ngClass]="{
-    'fixed inset-0 z-50 flex flex-col w-64 px-4 py-4 bg-white border-r border-gray-200 md:relative md:translate-x-0 md:top-0 md:flex md:h-screen': true,
+    'fixed inset-0 z-50 flex flex-col w-64 px-4 py-4 bg-white border-r border-gray-200 md:relative md:translate-x-0 md:top-0 md:flex gap-4 md:h-screen': true,
     'transform transition-transform duration-300 ease-in-out': true,
     'translate-x-0': isSidebarOpen,
     '-translate-x-full': !isSidebarOpen,
@@ -16,17 +16,11 @@
   <a
     class="flex items-center mb-6 py-4 border-b text-2xl font-semibold text-gray-900"
   >
-    <img
-      class="w-12 h-12 mr-2"
-      src="./assets/images/logo.svg"
-      alt="logo"
-      height="512"
-      width="512"
-    />
+    <img class="w-12 h-12 mr-2" src="./assets/images/logo.svg" alt="logo" />
     Budget.io
   </a>
-  <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
-    <ul class="space-y-2 font-medium">
+  <div class="h-full px-3 pb-4 overflow-y-auto">
+    <ul class="space-y-5 font-medium">
       <li *ngFor="let link of links">
         <app-sidebar-link
           [label]="link.label"
@@ -36,6 +30,7 @@
       </li>
     </ul>
   </div>
+  <div></div>
 </aside>
 
 <div
