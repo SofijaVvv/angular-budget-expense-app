@@ -2,7 +2,7 @@
   <table
     class="min-w-full table-fixed w-full text-sm text-left rtl:text-right text-gray-500"
   >
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+    <thead class="text-xs text-white uppercase bg-blue-500">
       <tr>
         <th
           *ngFor="let column of displayedColumns"
@@ -26,7 +26,8 @@
           <ng-container *ngFor="let action of actions">
             <button
               (click)="action.callback(row)"
-              class="text-blue-500 hover:text-blue-700 rounded-lg px-4 py-2 transition duration-200 mr-2"
+              [ngClass]="action.color"
+              class="px-4 py-2 transition duration-200 mr-2"
             >
               {{ action.label }}
             </button>

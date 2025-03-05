@@ -1,0 +1,55 @@
+<div
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div class="bg-white flex p-6 rounded-lg shadow-lg">
+    <form class="space-y-4">
+      <div>
+        <label for="categoryId" class="block text-sm font-medium text-gray-700"
+          >Category ID</label
+        >
+        <input
+          id="categoryId"
+          type="number"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+      </div>
+      <div>
+        <label for="currency" class="block text-sm font-medium text-gray-700"
+          >Currency</label
+        >
+        <input
+          id="currency"
+          type="text"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+      </div>
+      <div>
+        <label for="budgetId" class="block text-sm font-medium text-gray-700"
+          >Budget ID</label
+        >
+        <input
+          id="budgetId"
+          type="number"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+      </div>
+      <div class="space-y-4">
+        <div>
+          <label for="amount" class="block text-sm font-medium text-gray-700"
+            >Amount</label
+          >
+          <input
+            id="amount"
+            type="number"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <app-button label="Submit" />
+        <app-button label="cancel" [color]="'red'" (buttonClick)="onCancel()" />
+      </div>
+    </form>
+  </div>
+</div>

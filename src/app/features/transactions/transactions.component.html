@@ -3,7 +3,10 @@
     class="bg-white p-5 rounded-lg flex items-center justify-between shadow-md"
   >
     <h1 class="text-3xl font-semibold">Transaction Page</h1>
-    <app-button label="Add transaction" />
+    <app-button
+      (buttonClick)="toggleTransactionInput()"
+      label="Add transaction"
+    />
   </div>
   <div class="flex bg-white rounded flex-1 w-full shadow p-3">
     <div
@@ -17,3 +20,7 @@
     </div>
   </div>
 </div>
+<app-transaction-input
+  *ngIf="isTransactionInputVisible"
+  (cancelTransaction)="toggleTransactionInput()"
+></app-transaction-input>

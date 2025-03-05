@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgClass } from '@angular/common';
 
-type ButtonColor = 'blue' | 'gray' | 'red';
+type ButtonColor = 'indigo' | 'gray' | 'red';
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonBorderRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
@@ -13,7 +13,7 @@ type ButtonBorderRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 })
 export class ButtonComponent {
   @Input() label: string = 'Click Me';
-  @Input() color: ButtonColor = 'blue';
+  @Input() color: ButtonColor = 'indigo';
   @Input() size: ButtonSize = 'medium';
   @Input() fullWidth: boolean = false;
   @Input() borderRadius: ButtonBorderRadius = 'md';
@@ -22,13 +22,13 @@ export class ButtonComponent {
   @Output() buttonClick = new EventEmitter<void>();
 
   colorClasses: Record<ButtonColor, string> = {
-    blue: 'bg-blue-500 text-white hover:bg-blue-600',
+    indigo: 'bg-indigo-600 text-white hover:bg-indigo-700',
     gray: 'bg-gray-500 text-white hover:bg-gray-600',
     red: 'bg-red-500 text-white hover:bg-red-600',
   };
 
   disabledColorClasses: Record<ButtonColor, string> = {
-    blue: 'bg-blue-400 text-white cursor-not-allowed',
+    indigo: 'bg-indigo-400 text-white cursor-not-allowed',
     gray: 'bg-gray-400 text-white cursor-not-allowed',
     red: 'bg-red-400 text-white cursor-not-allowed',
   };
