@@ -14,15 +14,23 @@ type ButtonBorderRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export class ButtonComponent {
   @Input() label: string = 'Click Me';
   @Input() color: ButtonColor = 'blue';
-  @Output() buttonClick = new EventEmitter<void>();
   @Input() size: ButtonSize = 'medium';
   @Input() fullWidth: boolean = false;
   @Input() borderRadius: ButtonBorderRadius = 'md';
+  @Input() disabled: boolean = false;
+
+  @Output() buttonClick = new EventEmitter<void>();
 
   colorClasses: Record<ButtonColor, string> = {
     blue: 'bg-blue-500 text-white hover:bg-blue-600',
     gray: 'bg-gray-500 text-white hover:bg-gray-600',
     red: 'bg-red-500 text-white hover:bg-red-600',
+  };
+
+  disabledColorClasses: Record<ButtonColor, string> = {
+    blue: 'bg-blue-400 text-white cursor-not-allowed',
+    gray: 'bg-gray-400 text-white cursor-not-allowed',
+    red: 'bg-red-400 text-white cursor-not-allowed',
   };
 
   sizeClasses: Record<ButtonSize, string> = {
@@ -41,6 +49,8 @@ export class ButtonComponent {
   };
 
   handleClick(): void {
-    this.buttonClick.emit();
+    if (!this.disabled) {
+      this.buttonClick.emit();
+    }
   }
 }

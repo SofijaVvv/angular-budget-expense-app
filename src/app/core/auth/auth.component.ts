@@ -10,6 +10,7 @@ import {
 import { UserService } from './services/user.service';
 import { UserFacade } from './services/user.facade';
 import { Subscription } from 'rxjs';
+import { ButtonComponent } from '../../shared/components/button/button.component';
 
 interface AuthForm {
   email: FormControl<string>;
@@ -27,6 +28,7 @@ interface AuthForm {
     NgClass,
     AsyncPipe,
     NgIf,
+    ButtonComponent,
   ],
   templateUrl: './auth.component.html',
 })

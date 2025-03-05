@@ -1,11 +1,12 @@
 <button
   [ngClass]="[
-    colorClasses[color],
+    disabled ? disabledColorClasses[color] : colorClasses[color],
     sizeClasses[size],
     borderRadiusClasses[borderRadius],
     fullWidth ? 'w-full' : '',
   ]"
   (click)="handleClick()"
+  [disabled]="disabled"
 >
   {{ label }}
 </button>
