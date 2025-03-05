@@ -1,6 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Transaction } from '../../models/transaction.model';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 
 @Component({
