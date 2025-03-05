@@ -54,7 +54,7 @@ export default class TransactionsComponent implements OnInit {
     this.transactionService.delete(id).subscribe({
       next: () => {
         console.log('Deleted transaction with id:', id);
-        this.loadTransactions(); // Reload the transactions after deletion
+        this.loadTransactions();
       },
       error: (err) => {
         console.error('Error deleting transaction:', err);
