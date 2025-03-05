@@ -56,9 +56,6 @@ export default class TransactionsComponent implements OnInit {
         console.log('Deleted transaction with id:', id);
         this.loadTransactions();
       },
-      error: (err) => {
-        console.error('Error deleting transaction:', err);
-      },
     });
   }
 }

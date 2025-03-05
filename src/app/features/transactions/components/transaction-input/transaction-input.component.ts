@@ -10,13 +10,13 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
   templateUrl: './transaction-input.component.html',
 })
 export class TransactionInputComponent implements OnInit {
-  transactionForm: FormGroup = this.fb.group({});
-  @Output() submitTransaction = new EventEmitter<Transaction>();
   @Output() cancelTransaction = new EventEmitter<void>();
 
-  constructor(private fb: FormBuilder) {}
+  constructor() {}
 
   ngOnInit(): void {}
+
+  //TODO popravi da custom dugme prima events
 
   onCancel(): void {
     this.cancelTransaction.emit();
