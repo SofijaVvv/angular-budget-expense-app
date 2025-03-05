@@ -34,6 +34,7 @@ interface AuthForm {
 })
 export default class AuthComponent implements OnInit, OnDestroy {
   authType = '';
+  isSubmitting = false;
   authForm: FormGroup<AuthForm>;
   loginError: string | null = null;
   registerError: string | null = null;
@@ -92,6 +93,10 @@ export default class AuthComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    if (this.authForm.invalid || this.isSubmitting) {
+      return;
+    }
+    this.isSubmitting = true;
     this.authType === 'login' ? this.onLogin() : this.onRegister();
   }
 

@@ -69,7 +69,7 @@
           [color]="'blue'"
           [size]="'medium'"
           [fullWidth]="true"
-          [disabled]="!authForm.valid"
+          [disabled]="isSubmitting || !authForm.valid"
           (buttonClick)="onSubmit()"
         ></app-button>
 
