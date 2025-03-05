@@ -1,5 +1,14 @@
 <div class="bg-gray-50 gap-5 flex flex-col md:h-full flex-1 p-6">
-  <div class="bg-white p-6 rounded-lg block shadow-md">
+  <div
+    class="bg-white p-5 rounded-lg flex items-center justify-between shadow-md"
+  >
     <h1 class="text-3xl font-semibold">Transaction Page</h1>
+    <app-button label="Add transaction" />
+  </div>
+  <div>
+    <app-table
+      [tableData]="transactions"
+      [displayedColumns]="displayedColumns"
+    />
   </div>
 </div>

@@ -1,0 +1,24 @@
+<div class="overflow-x-auto">
+  <table class="min-w-full bg-white border border-gray-200">
+    <thead>
+      <tr>
+        <th
+          *ngFor="let column of displayedColumns"
+          class="px-4 py-2 border-b border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-700"
+        >
+          {{ column }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of tableData" class="hover:bg-gray-50">
+        <td
+          *ngFor="let column of displayedColumns"
+          class="px-4 py-2 border-b border-gray-200 text-sm text-gray-600"
+        >
+          {{ row[column] }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
