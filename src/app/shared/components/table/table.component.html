@@ -1,22 +1,36 @@
-<div class="overflow-x-auto">
-  <table class="min-w-full bg-white border border-gray-200">
-    <thead>
+<div class="overflow-x-auto overflow-y-auto flex-1 shadow-md sm:rounded-lg">
+  <table
+    class="min-w-full table-fixed w-full text-sm text-left rtl:text-right text-gray-500"
+  >
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
       <tr>
         <th
           *ngFor="let column of displayedColumns"
-          class="px-4 py-2 border-b border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-700"
+          scope="col"
+          class="px-6 py-3"
         >
           {{ column }}
         </th>
+        <th class="px-6 text-center py-3">Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of tableData" class="hover:bg-gray-50">
-        <td
-          *ngFor="let column of displayedColumns"
-          class="px-4 py-2 border-b border-gray-200 text-sm text-gray-600"
-        >
+      <tr
+        *ngFor="let row of tableData"
+        class="odd:bg-white even:bg-gray-50 border-b border-gray-200"
+      >
+        <td *ngFor="let column of displayedColumns" class="px-6 py-4">
           {{ row[column] }}
+        </td>
+        <td class="px-6 text-center py-4">
+          <ng-container *ngFor="let action of actions">
+            <button
+              (click)="action.callback(row)"
+              class="text-blue-500 hover:text-blue-700 rounded-lg px-4 py-2 transition duration-200 mr-2"
+            >
+              {{ action.label }}
+            </button>
+          </ng-container>
         </td>
       </tr>
     </tbody>

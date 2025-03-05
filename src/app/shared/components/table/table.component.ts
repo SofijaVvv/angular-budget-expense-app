@@ -10,4 +10,5 @@ import { NgForOf } from '@angular/common';
 export class TableComponent {
   @Input() tableData: any[] = [];
   @Input() displayedColumns: string[] = [];
+  @Input() actions: { label: string; callback: (row: any) => void }[] = [];
 }
