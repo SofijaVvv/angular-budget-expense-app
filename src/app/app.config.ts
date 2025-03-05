@@ -17,6 +17,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthEffects } from './core/auth/store/auth.effects';
 import { authReducer } from './core/auth/store/auth.reducer';
 import { localStorageSyncReducer } from './store/local-storage.reducer';
+import { apiInterceptor } from './core/interceptors/api.interceptor';
 
 const reducers = {
   auth: authReducer,
@@ -30,7 +31,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore(reducers, { metaReducers }),
     provideEffects([AuthEffects]),
-    provideHttpClient(withInterceptors([tokenInterceptor, errorInterceptor])),
+    provideHttpClient(
+      withInterceptors([tokenInterceptor, errorInterceptor, apiInterceptor]),
+    ),
     importProvidersFrom(StoreRouterConnectingModule.forRoot()),
     importProvidersFrom(
       StoreDevtoolsModule.instrument({

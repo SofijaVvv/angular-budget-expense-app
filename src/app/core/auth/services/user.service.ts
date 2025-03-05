@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class UserService {
-  private baseUrl = environment.baseUrl;
   constructor(
     private http: HttpClient,
     private localStorage: JwtService,
@@ -22,7 +21,7 @@ export class UserService {
       .post<{
         token: string;
         user: User;
-      }>(`${this.baseUrl}/api/Users/Login`, credentials)
+      }>('api/Users/Login', credentials)
       .pipe(
         tap((response) => {
           this.localStorage.saveToken(response.token);
@@ -39,7 +38,7 @@ export class UserService {
     return this.http
       .post<{
         message: string;
-      }>(`${this.baseUrl}/api/Users/Register`, credentials)
+      }>('api/Users/Register', credentials)
       .pipe(
         tap((response) => {
           console.log('Registration message:', response.message);
