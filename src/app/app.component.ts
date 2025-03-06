@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './core/layout/sidebar/sidebar.component';
-import { filter } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { UserFacade } from './core/auth/services/user.facade';
 
 @Component({
@@ -11,22 +11,31 @@ import { UserFacade } from './core/auth/services/user.facade';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
+  private routerSubscription: Subscription | null = null;
   constructor(
     private router: Router,
     private userFacade: UserFacade,
-  ) {
-    this.router.events
-      .pipe(
-        filter(
-          (event): event is NavigationStart => event instanceof NavigationStart,
-        ),
-      )
-      .subscribe((event) => {
-        if (event.navigationTrigger === 'popstate') {
-          this.userFacade.logout();
-          localStorage.clear();
+  ) {}
+
+  ngOnInit(): void {
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.url.includes('/login') || event.url.includes('/register')) {
+          this.clearUserData();
         }
-      });
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+  }
+
+  private clearUserData() {
+    localStorage.clear();
+    this.userFacade.logout();
   }
 }
