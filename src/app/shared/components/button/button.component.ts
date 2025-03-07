@@ -19,7 +19,7 @@ export class ButtonComponent {
   @Input() borderRadius: ButtonBorderRadius = 'md';
   @Input() disabled: boolean = false;
 
-  @Output() buttonClick = new EventEmitter<void>();
+  @Output() buttonClick = new EventEmitter<MouseEvent>();
 
   colorClasses: Record<ButtonColor, string> = {
     indigo: 'bg-indigo-600 text-white hover:bg-indigo-700',
@@ -48,9 +48,9 @@ export class ButtonComponent {
     '2xl': 'rounded-2xl',
   };
 
-  handleClick(): void {
+  handleClick(event: MouseEvent): void {
     if (!this.disabled) {
-      this.buttonClick.emit();
+      this.buttonClick.emit(event);
     }
   }
 }

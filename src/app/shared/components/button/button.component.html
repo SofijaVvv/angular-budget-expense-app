@@ -5,7 +5,7 @@
     borderRadiusClasses[borderRadius],
     fullWidth ? 'w-full' : '',
   ]"
-  (click)="handleClick()"
+  (click)="handleClick($event)"
   [disabled]="disabled"
 >
   {{ label }}

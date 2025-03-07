@@ -14,7 +14,7 @@ import { NgIf } from '@angular/common';
 })
 export default class TransactionsComponent implements OnInit {
   transactions: Transaction[] = [];
-  isTransactionInputVisible = false;
+  isTransactionInputVisible = true;
 
   actions = [
     {
