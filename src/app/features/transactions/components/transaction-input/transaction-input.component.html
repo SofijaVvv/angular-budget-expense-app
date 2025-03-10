@@ -7,14 +7,6 @@
       <div>
         <app-dropdown
           [options]="['Option 1', 'Option 2', 'Option 3']"
-          placeholder="Choose category"
-          (selectionChange)="handleSelection($event)"
-        ></app-dropdown>
-      </div>
-
-      <div>
-        <app-dropdown
-          [options]="['Option 1', 'Option 2', 'Option 3']"
           placeholder="Choose transaction type"
           (selectionChange)="handleSelection($event)"
         ></app-dropdown>
@@ -47,12 +39,17 @@
       </div>
 
       <div class="flex gap-2">
-        <app-button label="Submit" />
-        <app-button
-          label="cancel"
-          [color]="'red'"
-          (buttonClick)="onCancel($event)"
-        />
+        <div class="w-full">
+          <app-button [fullWidth]="true" label="Submit" />
+        </div>
+        <div class="w-full">
+          <app-button
+            label="cancel"
+            [color]="'red'"
+            [fullWidth]="true"
+            (buttonClick)="onCancel($event)"
+          />
+        </div>
       </div>
     </form>
   </div>
