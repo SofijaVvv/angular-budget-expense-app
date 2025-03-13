@@ -12,11 +12,11 @@ import { InputComponent } from '../../../../shared/components/input/input.compon
 export class TransactionInputComponent implements OnInit {
   @Output() cancelTransaction = new EventEmitter<void>();
 
+  transactionTypeList = ['Income', 'Expense'];
+  currencyList = ['EUR', 'USD'];
   constructor() {}
 
   ngOnInit(): void {}
-
-  //TODO popravi da custom dugme prima events
 
   onCancel(event: Event): void {
     event.preventDefault();

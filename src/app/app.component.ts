@@ -35,11 +35,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('window:beforeunload', ['$event'])
-  handleBeforeUnload(event: Event): void {
-    this.clearUserData();
-  }
-
   @HostListener('window:popstate', ['$event'])
   onPopState(event: PopStateEvent): void {
     if (location.pathname === '/login') {
