@@ -3,21 +3,26 @@
 >
   <div class="bg-white w-96 flex gap-4 flex-col p-6 rounded-lg shadow-lg">
     <div class="text-2xl">Add new transaction</div>
-    <form class="space-y-4">
+    <form [formGroup]="transactionForm" class="space-y-4">
       <div>
         <app-dropdown
           [options]="transactionTypeList"
           placeholder="Choose transaction type"
-          (selectionChange)="handleSelection($event)"
+          formControlName="transactionType"
         ></app-dropdown>
       </div>
 
       <div class="flex gap-2 w-full">
-        <div class="w-full">
+        <div
+          class="w-full"
+          *ngIf="transactionForm.get('transactionType')?.value !== 'Account'"
+        >
           <app-dropdown
-            [options]="['Option 1', 'Option 2', 'Option 3']"
+            [options]="budgetList"
+            [displayProperty]="'name'"
+            [valueProperty]="'id'"
             placeholder="Budget"
-            (selectionChange)="handleSelection($event)"
+            formControlName="budgetId"
           ></app-dropdown>
         </div>
 
@@ -25,18 +30,27 @@
           <app-dropdown
             [options]="currencyList"
             placeholder="Currency"
-            (selectionChange)="handleSelection($event)"
+            formControlName="currency"
           ></app-dropdown>
         </div>
       </div>
 
       <div>
-        <app-input placeholder="Enter amount" label="Amount" width="w-72" />
+        <app-input
+          formControlName="amount"
+          placeholder="Enter amount"
+          label="Amount"
+          width="w-72"
+        />
       </div>
 
       <div class="flex gap-2">
         <div class="w-full">
-          <app-button [fullWidth]="true" label="Submit" />
+          <app-button
+            [fullWidth]="true"
+            label="Submit"
+            (buttonClick)="onSubmit()"
+          />
         </div>
         <div class="w-full">
           <app-button

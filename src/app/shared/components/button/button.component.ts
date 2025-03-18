@@ -22,7 +22,7 @@ export class ButtonComponent {
   @Output() buttonClick = new EventEmitter<MouseEvent>();
 
   colorClasses: Record<ButtonColor, string> = {
-    indigo: 'bg-indigo-600 text-white hover:bg-indigo-700',
+    indigo: 'bg-indigo-500 text-white hover:bg-indigo-700',
     gray: 'bg-gray-500 text-white hover:bg-gray-600',
     red: 'bg-red-500 text-white hover:bg-red-600',
   };

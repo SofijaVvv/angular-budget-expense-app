@@ -1,4 +1,7 @@
-<div class="w-full flex min-w-full max-w-full">
+<div class="w-full flex-col gap-1 flex min-w-full max-w-full">
+  <label class="block text-sm font-medium text-gray-600">
+    {{ label }}
+  </label>
   <div
     (appClickOutside)="closeDropdown()"
     class="relative inline-block w-full text-left"
@@ -36,8 +39,8 @@
             href="#"
             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             (click)="selectOption(option); $event.preventDefault()"
-            >{{ option }}</a
-          >
+            >{{ isObject(option) ? option[displayProperty] : option }}
+          </a>
         </ng-container>
       </div>
     </div>

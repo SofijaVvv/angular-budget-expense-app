@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  forwardRef,
   HostListener,
   Input,
   OnDestroy,
@@ -11,7 +12,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
-import { ControlValueAccessor } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 import { Observable } from 'rxjs';
 import { DropdownStore } from './dropdown.store';
@@ -21,10 +22,20 @@ import { DropdownStore } from './dropdown.store';
   standalone: true,
   imports: [NgIf, NgForOf, ClickOutsideDirective],
   templateUrl: './dropdown.component.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DropdownComponent),
+      multi: true,
+    },
+  ],
 })
 export class DropdownComponent implements ControlValueAccessor {
-  @Input() options: string[] = [];
+  @Input() options: any[] = [];
+  @Input() label: string = '';
   @Input() placeholder: string = 'Select an option';
+  @Input() displayProperty: string = 'name';
+  @Input() valueProperty: string = 'id';
   @Output() selectionChange = new EventEmitter<string>();
 
   isOpen = false;
@@ -51,8 +62,19 @@ export class DropdownComponent implements ControlValueAccessor {
     }
   }
 
-  writeValue(value: string): void {
-    this.selectedOption = value;
+  writeValue(value: any): void {
+    if (
+      this.options &&
+      this.options.length > 0 &&
+      typeof this.options[0] === 'object'
+    ) {
+      const selected = this.options.find(
+        (opt) => opt[this.valueProperty] === value,
+      );
+      this.selectedOption = selected ? selected[this.displayProperty] : null;
+    } else {
+      this.selectedOption = value;
+    }
   }
 
   registerOnChange(fn: (value: string) => void): void {
@@ -63,10 +85,21 @@ export class DropdownComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  selectOption(option: string) {
-    this.selectedOption = option;
-    this.selectionChange.emit(option);
-    this.onChange(option);
+  selectOption(option: any) {
+    let displayValue: string;
+    let value: any;
+
+    if (typeof option === 'object' && option !== null) {
+      displayValue = option[this.displayProperty];
+      value = option[this.valueProperty];
+    } else {
+      displayValue = option;
+      value = option;
+    }
+
+    this.selectedOption = displayValue;
+    this.selectionChange.emit(value);
+    this.onChange(value);
     this.dropdownStore.closeDropdown();
   }
 
@@ -76,5 +109,9 @@ export class DropdownComponent implements ControlValueAccessor {
 
   closeDropdown() {
     this.dropdownStore.closeDropdown();
+  }
+
+  isObject(option: any): boolean {
+    return option !== null && typeof option === 'object';
   }
 }

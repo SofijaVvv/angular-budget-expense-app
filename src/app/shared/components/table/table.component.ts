@@ -9,10 +9,14 @@ import { NgClass, NgForOf } from '@angular/common';
 })
 export class TableComponent {
   @Input() tableData: any[] = [];
-  @Input() displayedColumns: string[] = [];
+  @Input() displayedColumns: { key: string; label: string }[] = [];
   @Input() actions: {
     label: string;
     callback: (row: any) => void;
     color: string;
   }[] = [];
+
+  getNestedProperty(obj: any, path: string): any {
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+  }
 }

@@ -23,4 +23,5 @@
 <app-transaction-input
   *ngIf="isTransactionInputVisible"
   (cancelTransaction)="toggleTransactionInput()"
+  (transactionCreated)="loadTransactions()"
 ></app-transaction-input>

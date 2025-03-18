@@ -18,4 +18,20 @@ export class JwtService {
   destroyToken(): void {
     localStorage.removeItem(this.tokenKey);
   }
+
+  isTokenExpired(): boolean {
+    const token = this.getToken();
+    if (!token) {
+      return true;
+    }
+    const payload = this.decodeToken(token);
+    const expirationDate = new Date(payload.exp * 1000);
+    return expirationDate < new Date();
+  }
+
+  private decodeToken(token: string): any {
+    const payloadBase64 = token.split('.')[1];
+    const payloadJson = atob(payloadBase64);
+    return JSON.parse(payloadJson);
+  }
 }

@@ -1,15 +1,17 @@
 <div class="overflow-x-auto overflow-y-auto flex-1 shadow-md sm:rounded-lg">
   <table
-    class="min-w-full table-fixed w-full text-sm text-left rtl:text-right text-gray-500"
+    class="min-w-full border border-gray-300 table-fixed w-full text-sm text-left rtl:text-right text-gray-500"
   >
-    <thead class="text-xs text-white uppercase bg-blue-500">
+    <thead
+      class="text-xs text-white uppercase bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+    >
       <tr>
         <th
           *ngFor="let column of displayedColumns"
           scope="col"
           class="px-6 py-3"
         >
-          {{ column }}
+          {{ column.label }}
         </th>
         <th class="px-6 text-center py-3">Actions</th>
       </tr>
@@ -20,7 +22,7 @@
         class="odd:bg-white even:bg-gray-50 border-b border-gray-200"
       >
         <td *ngFor="let column of displayedColumns" class="px-6 py-4">
-          {{ row[column] }}
+          {{ getNestedProperty(row, column.key) }}
         </td>
         <td class="px-6 text-center py-4">
           <ng-container *ngFor="let action of actions">

@@ -8,7 +8,6 @@ export interface Category {
 export interface Transaction {
   id: number;
   account: Account;
-  category: Category;
   currency: string;
   budgetId: number;
   amount: number;

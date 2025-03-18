@@ -1,1 +1,25 @@
-<p>budget works!</p>
+<div class="bg-gray-100 gap-5 flex flex-col md:h-full flex-1 p-6">
+  <div
+    class="bg-white p-5 rounded-lg flex items-center justify-between shadow-md"
+  >
+    <h1 class="text-3xl font-semibold">Budget Page</h1>
+    <app-button (buttonClick)="toggleBudgetInput()" label="Add budget" />
+  </div>
+  <div class="flex bg-white rounded flex-1 w-full shadow p-3">
+    <div
+      class="overflow-x-auto overflow-y-auto flex-1 max-h-[calc(100vh-200px)]"
+    >
+      <app-table
+        [tableData]="budgets"
+        [displayedColumns]="displayedColumns"
+        [actions]="actions"
+      />
+    </div>
+  </div>
+</div>
+<app-budget-input
+  *ngIf="isBudgetInputVisible"
+  (budgetCreated)="loadBudgets()"
+  (cancelBudget)="toggleBudgetInput()"
+  [budget]="selectedBudget"
+></app-budget-input>
