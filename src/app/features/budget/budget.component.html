@@ -20,6 +20,6 @@
 <app-budget-input
   *ngIf="isBudgetInputVisible"
   (budgetCreated)="loadBudgets()"
-  (cancelBudget)="toggleBudgetInput()"
+  (cancelBudget)="onClose()"
   [budget]="selectedBudget"
 ></app-budget-input>

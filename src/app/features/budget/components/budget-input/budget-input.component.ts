@@ -45,6 +45,7 @@ export class BudgetInputComponent implements OnInit {
     this.initForm();
     if (this.budget) {
       this.budgetForm.patchValue(this.budget);
+      console.log(this.budget);
     }
   }
 
@@ -55,27 +56,35 @@ export class BudgetInputComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.budgetForm.valid) {
-      const budget = this.budgetForm.value;
-
-      this.budgetService.create(budget).subscribe((data) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Transaction created successfully',
-          timer: 1000,
-        }).then(() => {
-          this.budgetCreated.emit(data);
-          this.cancelBudget.emit();
-        });
-      });
-    } else {
+    if (this.budgetForm.invalid) {
       void Swal.fire({
         icon: 'error',
         title: 'Invalid Form',
         text: 'Please fill in all required fields correctly.',
         timer: 3000,
       });
+      return;
     }
+
+    const budget = this.budgetForm.value;
+    const isExistingBudget = !!budget.id;
+    const operation = isExistingBudget
+      ? this.budgetService.update(budget)
+      : this.budgetService.create(budget);
+    const successMessage = isExistingBudget
+      ? 'Budget updated successfully'
+      : 'Budget created successfully';
+
+    operation.subscribe(() => {
+      Swal.fire({
+        icon: 'success',
+        title: successMessage,
+        timer: 1000,
+      }).then(() => {
+        this.budgetCreated.emit();
+        this.cancelBudget.emit();
+      });
+    });
   }
 
   onCancel(event: Event): void {
@@ -85,6 +94,7 @@ export class BudgetInputComponent implements OnInit {
 
   private initForm() {
     this.budgetForm = new FormGroup({
+      id: new FormControl(null),
       name: new FormControl('', Validators.required),
       amount: new FormControl(0, Validators.required),
       categoryId: new FormControl(null, Validators.required),

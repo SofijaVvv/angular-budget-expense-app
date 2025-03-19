@@ -1,15 +1,9 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   forwardRef,
-  HostListener,
   Input,
-  OnDestroy,
-  OnInit,
   Output,
-  Renderer2,
-  ViewChild,
 } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';

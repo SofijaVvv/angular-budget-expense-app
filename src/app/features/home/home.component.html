@@ -6,7 +6,9 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="p-4 bg-white rounded-lg shadow-md flex flex-col items-center">
       <h2 class="text-xl font-semibold text-gray-700">Total Balance</h2>
-      <p class="text-2xl font-bold text-green-600">$5,200</p>
+      <p class="text-2xl font-bold text-green-600">
+        {{ accountDetails?.balance | currency: currencyCode }}
+      </p>
     </div>
     <div class="p-4 bg-white rounded-lg shadow-md flex flex-col items-center">
       <h2 class="text-xl font-semibold text-gray-700">Total Expenses</h2>
@@ -18,11 +20,11 @@
     class="bg-white justify-center items-center flex flex-1 p-6 rounded-lg shadow-md"
   >
     <div class="block text-center">
-      <h2 class="text-2xl font-semibold mb-2">Start Your First Budget</h2>
+      <h2 class="text-2xl font-semibold mb-2">Add Budget</h2>
       <p class="text-gray-600 mb-4">
-        Take control of your finances by creating your first budget today.
+        Take control of your finances by creating a budget today.
       </p>
-      <app-button label="Create budget" />
+      <app-button label="Create budget" [routerLink]="['/budget']" />
     </div>
   </div>
 
@@ -32,14 +34,22 @@
     >
       <h2 class="text-xl font-semibold text-gray-700">Add Transaction</h2>
       <p class="text-gray-600 mb-4">Quickly log a new expense or income.</p>
-      <app-button label="Add transaction" [size]="'small'" />
+      <app-button
+        label="Add transaction"
+        [routerLink]="['/transactions']"
+        [size]="'small'"
+      />
     </div>
     <div
       class="p-4 bg-white rounded-lg shadow-md flex flex-col items-center text-center"
     >
       <h2 class="text-xl font-semibold text-gray-700">View your account</h2>
       <p class="text-gray-600 mb-4">Take a quick look at you account.</p>
-      <app-button label="View account" [size]="'small'" />
+      <app-button
+        label="View account"
+        [routerLink]="['/account']"
+        [size]="'small'"
+      />
     </div>
   </div>
 </div>

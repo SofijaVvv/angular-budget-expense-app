@@ -38,16 +38,16 @@ export default class BudgetComponent implements OnInit {
       callback: (row: Budget) => this.editBudget(row),
       color: 'text-blue-500 hover:text-blue-700',
     },
-    {
-      label: 'Delete',
-      callback: (row: Budget) => this.deleteBudget(row.id),
-      color: 'text-red-500 hover:text-red-700',
-    },
   ];
   constructor(private budgetService: BudgetService) {}
 
   toggleBudgetInput(): void {
     this.isBudgetInputVisible = !this.isBudgetInputVisible;
+  }
+
+  onClose() {
+    this.isBudgetInputVisible = false;
+    this.selectedBudget = null;
   }
 
   ngOnInit() {
@@ -56,27 +56,6 @@ export default class BudgetComponent implements OnInit {
 
   loadBudgets() {
     this.budgetService.getAll().subscribe((data) => (this.budgets = data));
-  }
-
-  deleteBudget(id: number): void {
-    Swal.fire({
-      icon: 'question',
-      title: 'Are you sure you want to delete budget?',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.budgetService.delete(id).subscribe(() => {
-          void Swal.fire(
-            'Deleted!',
-            'Your budget has been deleted.',
-            'success',
-          );
-          this.budgets = this.budgets.filter((budget) => budget.id !== id);
-        });
-      }
-    });
   }
 
   editBudget(budget: Budget) {
