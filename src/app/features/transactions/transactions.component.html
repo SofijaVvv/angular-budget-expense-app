@@ -1,4 +1,4 @@
-<div class="bg-gray-100 gap-5 flex flex-col md:h-full flex-1 p-6">
+<div class="bg-gray-100 gap-5 flex flex-col h-screen p-6">
   <div
     class="bg-white p-5 rounded-lg flex items-center justify-between shadow-md"
   >
@@ -10,7 +10,7 @@
   </div>
   <div class="flex bg-white rounded flex-1 w-full shadow p-3">
     <div
-      class="overflow-x-auto overflow-y-auto flex-1 max-h-[calc(100vh-200px)]"
+      class="overflow-x-auto overflow-y-auto flex-1 md:max-h-[calc(100vh-200px)] max-h-[calc(100vh-240px)]"
     >
       <app-table
         [tableData]="transactions"

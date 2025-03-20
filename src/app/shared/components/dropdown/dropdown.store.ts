@@ -13,15 +13,19 @@ export class DropdownStore extends ComponentStore<DropdownState> {
     super({ openDropdownId: null });
   }
 
-  readonly openDropdown = this.updater((state, id: string) => ({
-    ...state,
-    openDropdownId: id,
-  }));
+  readonly openDropdown = this.updater(
+    (state, id: string): DropdownState => ({
+      ...state,
+      openDropdownId: id,
+    }),
+  );
 
-  readonly closeDropdown = this.updater((state) => ({
-    ...state,
-    openDropdownId: null,
-  }));
+  readonly closeDropdown = this.updater(
+    (state): DropdownState => ({
+      ...state,
+      openDropdownId: null,
+    }),
+  );
 
   readonly openDropdownId$ = this.select((state) => state.openDropdownId);
 }

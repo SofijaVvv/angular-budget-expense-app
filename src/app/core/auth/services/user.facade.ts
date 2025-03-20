@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { login, logout } from '../store/auth.actions';
+import { deleteUser, login, logout } from '../store/auth.actions';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 import {
@@ -29,5 +29,9 @@ export class UserFacade {
 
   logout() {
     this.store.dispatch(logout());
+  }
+
+  deleteUser(id: number) {
+    this.store.dispatch(deleteUser({ id }));
   }
 }

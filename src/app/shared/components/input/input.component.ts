@@ -2,8 +2,6 @@ import { Component, forwardRef, Input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-let input = Input();
-
 @Component({
   selector: 'app-input',
   standalone: true,

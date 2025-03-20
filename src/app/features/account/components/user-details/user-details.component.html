@@ -1,0 +1,20 @@
+<div
+  class="flex items-center justify-between gap-5 bg-white rounded w-full shadow py-4 px-7"
+>
+  <div class="flex items-center gap-5">
+    <div
+      class="h-20 border justify-center flex items-center w-20 bg-gray-50 shadow-md rounded"
+    >
+      <img src="assets/images/user.svg" alt="" class="h-14 w-14" />
+    </div>
+    <div class="flex flex-col">
+      <div class="text-lg font-medium">{{ userDetails?.fullName }}</div>
+      <div class="text-gray-500">{{ userDetails?.email }}</div>
+    </div>
+  </div>
+  <app-button
+    label="Delete"
+    (buttonClick)="onDeleteUserAccount()"
+    [color]="'red'"
+  ></app-button>
+</div>

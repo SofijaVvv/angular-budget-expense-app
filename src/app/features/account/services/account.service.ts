@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Account } from '../models/account.model';
-import { Budget } from '../../budget/models /budget.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,15 +9,19 @@ import { Budget } from '../../budget/models /budget.model';
 export class AccountService {
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Account[]> {
-    return this.http.get<Account[]>('api/Accounts');
-  }
-
-  getById(id: number): Observable<Account> {
-    return this.http.get<Account>(`api/Accounts/${id}`);
-  }
-
   getAccountDetails(): Observable<Account> {
     return this.http.get<Account>('api/Accounts/Details');
+  }
+
+  getAccountDetailsFormatted(): Observable<{
+    details: Account;
+    currencyCode: string;
+  }> {
+    return this.getAccountDetails().pipe(
+      map((data) => ({
+        details: data,
+        currencyCode: data.currency === 'EUR' ? 'EUR' : 'USD',
+      })),
+    );
   }
 }

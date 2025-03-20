@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
 type ButtonColor = 'indigo' | 'gray' | 'red';
 type ButtonSize = 'small' | 'medium' | 'large';

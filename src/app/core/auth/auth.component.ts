@@ -118,10 +118,6 @@ export default class AuthComponent implements OnInit, OnDestroy {
       next: () => {
         void this.router.navigate(['/login']);
       },
-      error: (err) => {
-        this.registerError =
-          err?.error?.message || 'Registration failed: user already exists.';
-      },
     });
   }
 }

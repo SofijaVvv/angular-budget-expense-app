@@ -26,8 +26,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           break;
         case 401:
           void showErrorAlert(
-            'Token expired',
-            'Please log in again if you want to continue',
+            'Unauthorized!',
+            'Please log in again if you want to continue!',
             2000,
             false,
           ).then(() => {

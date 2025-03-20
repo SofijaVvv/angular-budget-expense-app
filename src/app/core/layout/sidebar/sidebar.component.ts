@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AsyncPipe,
   NgClass,
@@ -9,6 +9,7 @@ import {
 import { UserFacade } from '../../auth/services/user.facade';
 import { SidebarLinkComponent } from '../sidebar-link/sidebar-link.component';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-layout-navbar',
@@ -24,9 +25,10 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
   ],
   templateUrl: './sidebar.component.html',
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
   isSidebarOpen = false;
+  private subscription: Subscription | null = null;
   links = [
     { label: 'Home', icon: './assets/images/home.svg', route: '/home' },
     {
@@ -45,9 +47,15 @@ export class SidebarComponent implements OnInit {
   constructor(private userFacade: UserFacade) {}
 
   ngOnInit() {
-    this.userFacade.isAuthenticated$.subscribe((authenticated) => {
-      this.isAuthenticated = authenticated;
-    });
+    this.subscription = this.userFacade.isAuthenticated$.subscribe(
+      (authenticated) => {
+        this.isAuthenticated = authenticated;
+      },
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   toggleSidebar() {

@@ -17,3 +17,13 @@ export const loginFailure = createAction(
 );
 
 export const logout = createAction('[Auth] Logout');
+
+export const deleteUser = createAction(
+  '[Auth] Delete User',
+  props<{ id: number }>(),
+);
+export const deleteUserSuccess = createAction('[Auth] Delete User Success');
+export const deleteUserFailure = createAction(
+  '[Auth] Delete User Failure',
+  props<{ error: string }>(),
+);

@@ -5,9 +5,7 @@ import { TableComponent } from '../../shared/components/table/table.component';
 import { TransactionInputComponent } from '../transactions/components/transaction-input/transaction-input.component';
 import { BudgetService } from './services/budget.service';
 import { Budget } from './models /budget.model';
-import { Transaction } from '../transactions/models/transaction.model';
 import { BudgetInputComponent } from './components/budget-input/budget-input.component';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-budget',

@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { login, loginFailure, loginSuccess, logout } from './auth.actions';
+import {
+  deleteUser,
+  deleteUserFailure,
+  deleteUserSuccess,
+  login,
+  loginFailure,
+  loginSuccess,
+  logout,
+} from './auth.actions';
 import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
@@ -32,24 +40,41 @@ export class AuthEffects {
   });
 
   loginSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
+    () => {
+      return this.actions$.pipe(
         ofType(loginSuccess),
         tap(() => {
           void this.router.navigate(['/home']);
         }),
-      ),
+      );
+    },
     { dispatch: false },
   );
 
   logout$ = createEffect(
-    () =>
-      this.actions$.pipe(
+    () => {
+      return this.actions$.pipe(
         ofType(logout),
         tap(() => {
           this.userService.logout();
         }),
-      ),
+      );
+    },
     { dispatch: false },
   );
+
+  deleteUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(deleteUser),
+      mergeMap(({ id }) =>
+        this.userService.delete(id).pipe(
+          map(() => deleteUserSuccess()),
+          tap(() => void this.router.navigate(['/login'])),
+          catchError(() =>
+            of(deleteUserFailure({ error: 'Failed to delete user' })),
+          ),
+        ),
+      ),
+    );
+  });
 }

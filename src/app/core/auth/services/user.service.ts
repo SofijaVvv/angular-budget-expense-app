@@ -46,6 +46,10 @@ export class UserService {
       );
   }
 
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`api/Users/${id}`);
+  }
+
   logout() {
     this.localStorage.destroyToken();
     void this.router.navigate(['/']);

@@ -18,6 +18,7 @@ import { AuthEffects } from './core/auth/store/auth.effects';
 import { authReducer } from './core/auth/store/auth.reducer';
 import { localStorageSyncReducer } from './store/local-storage.reducer';
 import { apiInterceptor } from './core/interceptors/api.interceptor';
+import { spinnerInterceptor } from './core/interceptors/spinner.interceptor';
 
 const reducers = {
   auth: authReducer,
@@ -32,7 +33,12 @@ export const appConfig: ApplicationConfig = {
     provideStore(reducers, { metaReducers }),
     provideEffects([AuthEffects]),
     provideHttpClient(
-      withInterceptors([tokenInterceptor, errorInterceptor, apiInterceptor]),
+      withInterceptors([
+        tokenInterceptor,
+        errorInterceptor,
+        apiInterceptor,
+        spinnerInterceptor,
+      ]),
     ),
     importProvidersFrom(StoreRouterConnectingModule.forRoot()),
     importProvidersFrom(
