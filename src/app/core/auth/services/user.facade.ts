@@ -6,7 +6,6 @@ import { User } from '../../models/user.model';
 import {
   selectAuthError,
   selectIsAuthenticated,
-  selectIsLoading,
   selectUser,
 } from '../store/auth.selectors';
 
@@ -15,7 +14,6 @@ import {
 })
 export class UserFacade {
   user$: Observable<User | null> = this.store.select(selectUser);
-  isLoading$: Observable<boolean> = this.store.select(selectIsLoading);
   authError$: Observable<string | null> = this.store.select(selectAuthError);
   isAuthenticated$: Observable<boolean> = this.store.select(
     selectIsAuthenticated,

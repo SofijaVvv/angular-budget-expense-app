@@ -2,18 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { TableComponent } from '../../shared/components/table/table.component';
 import { Transaction } from './models/transaction.model';
-import { TransactionService } from './services/transaction.service';
 import { TransactionInputComponent } from './components/transaction-input/transaction-input.component';
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
+import { Observable } from 'rxjs';
+import { TransactionFacade } from './services/transaction.facade';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
-  imports: [ButtonComponent, TableComponent, TransactionInputComponent, NgIf],
-  templateUrl: './transactions.component.html',
+  imports: [
+    ButtonComponent,
+    TableComponent,
+    TransactionInputComponent,
+    NgIf,
+    AsyncPipe,
+  ],
+  templateUrl: './transaction.component.html',
 })
-export default class TransactionsComponent implements OnInit {
+export default class TransactionComponent implements OnInit {
+  transactions$: Observable<Transaction[]>;
   transactions: Transaction[] = [];
   isTransactionInputVisible = false;
   displayedColumns = [
@@ -31,20 +39,19 @@ export default class TransactionsComponent implements OnInit {
     },
   ];
 
-  constructor(private transactionService: TransactionService) {}
+  constructor(private transactionFacade: TransactionFacade) {
+    this.transactions$ = this.transactionFacade.transactions$;
+  }
 
   ngOnInit(): void {
     this.loadTransactions();
+    this.transactions$.subscribe((data) => {
+      this.transactions = data;
+    });
   }
 
   loadTransactions() {
-    this.transactionService.getAll().subscribe(
-      (data) =>
-        (this.transactions = data.map((transaction) => ({
-          ...transaction,
-          createdAt: this.fixDate(transaction.createdAt),
-        }))),
-    );
+    this.transactionFacade.loadTransactions();
   }
 
   toggleTransactionInput(): void {
@@ -60,24 +67,13 @@ export default class TransactionsComponent implements OnInit {
       cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.transactionService.delete(id).subscribe(() => {
-          void Swal.fire(
-            'Deleted!',
-            'Your transaction has been deleted.',
-            'success',
-          );
-          this.loadTransactions();
-        });
+        this.transactionFacade.deleteTransaction(id);
+        void Swal.fire(
+          'Deleted!',
+          'Your transaction has been deleted.',
+          'success',
+        );
       }
     });
-  }
-
-  private fixDate(dateString: string): string {
-    if (!dateString || dateString.startsWith('0001-01-01')) {
-      return 'N/A';
-    }
-    const date = new Date(dateString);
-    date.setHours(date.getHours() + 1);
-    return date.toLocaleString('de-DE');
   }
 }

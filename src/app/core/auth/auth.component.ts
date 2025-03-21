@@ -38,7 +38,7 @@ export default class AuthComponent implements OnInit, OnDestroy {
   authForm: FormGroup<AuthForm>;
   loginError: string | null = null;
   registerError: string | null = null;
-  private readonly authErrorSubscription: Subscription;
+  private authErrorSubscription: Subscription;
   constructor(
     private activatedRoute: ActivatedRoute,
     private userFacade: UserFacade,
@@ -67,17 +67,19 @@ export default class AuthComponent implements OnInit, OnDestroy {
     this.authType = this.activatedRoute.snapshot.url.at(-1)!.path;
     this.initializeForm();
     this.resetErrors();
+
+    this.authErrorSubscription = this.userFacade.authError$.subscribe(
+      (error) => {
+        if (error) {
+          this.resetForm();
+          this.isSubmitting = false;
+        }
+      },
+    );
   }
 
   ngOnDestroy() {
-    if (this.authErrorSubscription) {
-      this.authErrorSubscription.unsubscribe();
-    }
-  }
-
-  private resetErrors() {
-    this.loginError = null;
-    this.registerError = null;
+    this.authErrorSubscription?.unsubscribe();
   }
 
   private initializeForm() {
@@ -119,5 +121,16 @@ export default class AuthComponent implements OnInit, OnDestroy {
         void this.router.navigate(['/login']);
       },
     });
+  }
+
+  private resetErrors() {
+    this.loginError = null;
+    this.registerError = null;
+  }
+
+  private resetForm() {
+    this.authForm.reset();
+    this.authForm.markAsPristine();
+    this.authForm.markAsUntouched();
   }
 }

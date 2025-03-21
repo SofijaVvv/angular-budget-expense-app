@@ -10,9 +10,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TransactionService } from '../../services/transaction.service';
 import { NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
+import { TransactionFacade } from '../../services/transaction.facade';
 
 @Component({
   selector: 'app-transaction-input',
@@ -28,7 +28,6 @@ import Swal from 'sweetalert2';
 })
 export class TransactionInputComponent implements OnInit {
   @Output() cancelTransaction = new EventEmitter<void>();
-  @Output() transactionCreated = new EventEmitter<any>();
 
   transactionTypeList = ['Account', 'Budget'];
   currencyList = ['EUR', 'USD'];
@@ -37,7 +36,7 @@ export class TransactionInputComponent implements OnInit {
   selectbudget: {} = {};
   constructor(
     private budgetService: BudgetService,
-    private transactionService: TransactionService,
+    private transactionFacade: TransactionFacade,
   ) {}
 
   ngOnInit(): void {
@@ -77,16 +76,14 @@ export class TransactionInputComponent implements OnInit {
   onSubmit() {
     if (this.transactionForm.valid) {
       const transaction = this.transactionForm.value;
+      this.transactionFacade.createTransaction(transaction);
 
-      this.transactionService.create(transaction).subscribe((data) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Transaction created successfully',
-          timer: 1000,
-        }).then(() => {
-          this.transactionCreated.emit(data);
-          this.cancelTransaction.emit();
-        });
+      Swal.fire({
+        icon: 'success',
+        title: 'Transaction created successfully',
+        timer: 1000,
+      }).then(() => {
+        this.cancelTransaction.emit();
       });
     } else {
       void Swal.fire({

@@ -13,22 +13,11 @@ export class TransactionService {
     return this.http.get<Transaction[]>('api/Transactions');
   }
 
-  getById(id: number): Observable<Transaction> {
-    return this.http.get<Transaction>(`api/Transactions/${id}`);
-  }
-
   create(transaction: Partial<Transaction>): Observable<Transaction> {
     return this.http.post<Transaction>('api/Transactions', transaction);
   }
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`api/Transactions/${id}`);
-  }
-
-  update(transaction: Partial<Transaction>): Observable<Transaction> {
-    return this.http.put<Transaction>(
-      `api/Transactions/${transaction.id}`,
-      transaction,
-    );
   }
 }

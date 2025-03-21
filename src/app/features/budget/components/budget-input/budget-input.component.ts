@@ -9,11 +9,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { BudgetService } from '../../services/budget.service';
 import { Category } from '../../models /category.model';
 import { CategoryService } from '../../services/category.service';
 import Swal from 'sweetalert2';
 import { Budget } from '../../models /budget.model';
+import { BudgetFacade } from '../../services/budget.facade';
 
 @Component({
   selector: 'app-budget-input',
@@ -30,14 +30,13 @@ import { Budget } from '../../models /budget.model';
 export class BudgetInputComponent implements OnInit {
   @Input() budget: Budget | null = null;
   @Output() cancelBudget = new EventEmitter<void>();
-  @Output() budgetCreated = new EventEmitter<any>();
 
   budgetForm: FormGroup = new FormGroup({});
   categoryList: Category[] = [];
 
   constructor(
     private categoryService: CategoryService,
-    private budgetService: BudgetService,
+    private budgetFacade: BudgetFacade,
   ) {}
 
   ngOnInit() {
@@ -45,7 +44,6 @@ export class BudgetInputComponent implements OnInit {
     this.initForm();
     if (this.budget) {
       this.budgetForm.patchValue(this.budget);
-      console.log(this.budget);
     }
   }
 
@@ -68,22 +66,23 @@ export class BudgetInputComponent implements OnInit {
 
     const budget = this.budgetForm.value;
     const isExistingBudget = !!budget.id;
-    const operation = isExistingBudget
-      ? this.budgetService.update(budget)
-      : this.budgetService.create(budget);
+
+    if (isExistingBudget) {
+      this.budgetFacade.editBudget(budget);
+    } else {
+      this.budgetFacade.createBudget(budget);
+    }
+
     const successMessage = isExistingBudget
       ? 'Budget updated successfully'
       : 'Budget created successfully';
 
-    operation.subscribe(() => {
-      Swal.fire({
-        icon: 'success',
-        title: successMessage,
-        timer: 1000,
-      }).then(() => {
-        this.budgetCreated.emit();
-        this.cancelBudget.emit();
-      });
+    Swal.fire({
+      icon: 'success',
+      title: successMessage,
+      timer: 1000,
+    }).then(() => {
+      this.cancelBudget.emit();
     });
   }
 

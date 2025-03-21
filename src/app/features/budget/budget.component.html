@@ -10,7 +10,7 @@
       class="overflow-x-auto overflow-y-auto flex-1 max-h-[calc(100vh-200px)]"
     >
       <app-table
-        [tableData]="budgets"
+        [tableData]="(budgets$ | async) ?? []"
         [displayedColumns]="displayedColumns"
         [actions]="actions"
       />
@@ -19,7 +19,6 @@
 </div>
 <app-budget-input
   *ngIf="isBudgetInputVisible"
-  (budgetCreated)="loadBudgets()"
   (cancelBudget)="onClose()"
   [budget]="selectedBudget"
 ></app-budget-input>

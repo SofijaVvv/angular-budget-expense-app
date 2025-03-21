@@ -19,10 +19,16 @@ import { authReducer } from './core/auth/store/auth.reducer';
 import { localStorageSyncReducer } from './store/local-storage.reducer';
 import { apiInterceptor } from './core/interceptors/api.interceptor';
 import { spinnerInterceptor } from './core/interceptors/spinner.interceptor';
+import { transactionReducer } from './features/transactions/store/transaction.reducer';
+import { TransactionEffects } from './features/transactions/store/transaction.effects';
+import { budgetReducer } from './features/budget/store/budget.reducer';
+import { BudgetEffects } from './features/budget/store/budget.effects';
 
 const reducers = {
   auth: authReducer,
+  transactions: transactionReducer,
   router: routerReducer,
+  budgets: budgetReducer,
 };
 const metaReducers = [localStorageSyncReducer];
 
@@ -31,7 +37,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideStore(reducers, { metaReducers }),
-    provideEffects([AuthEffects]),
+    provideEffects([AuthEffects, TransactionEffects, BudgetEffects]),
     provideHttpClient(
       withInterceptors([
         tokenInterceptor,

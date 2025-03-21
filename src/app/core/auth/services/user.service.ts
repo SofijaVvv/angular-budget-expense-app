@@ -52,6 +52,6 @@ export class UserService {
 
   logout() {
     this.localStorage.destroyToken();
-    void this.router.navigate(['/']);
+    void this.router.navigate(['/login']);
   }
 }

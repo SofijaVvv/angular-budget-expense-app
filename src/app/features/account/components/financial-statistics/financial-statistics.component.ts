@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Transaction } from '../../../transactions/models/transaction.model';
 import { TransactionService } from '../../../transactions/services/transaction.service';
 import { CurrencyPipe, NgClass, NgForOf } from '@angular/common';
+import { fixDate } from '../../../../utils/date-utils';
 
 @Component({
   selector: 'app-financial-statistics',
@@ -21,17 +22,8 @@ export class FinancialStatisticsComponent implements OnInit {
     this.transactionService.getAll().subscribe((transactions) => {
       this.expenses = transactions.map((transaction) => ({
         ...transaction,
-        createdAt: this.fixDate(transaction.createdAt),
+        createdAt: fixDate(transaction.createdAt),
       }));
     });
-  }
-
-  private fixDate(dateString: string): string {
-    if (!dateString || dateString.startsWith('0001-01-01')) {
-      return 'N/A';
-    }
-    const date = new Date(dateString);
-    date.setHours(date.getHours() + 1);
-    return date.toLocaleString('de-DE');
   }
 }
