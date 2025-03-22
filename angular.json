@@ -87,9 +87,10 @@
               "src/assets/images"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.sass"
             ],
-            "scripts": []
+            "scripts": [],
+            "karmaConfig": "karma.conf.js"
           }
         }
       }
