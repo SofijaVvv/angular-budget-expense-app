@@ -46,7 +46,7 @@ export const budgetReducer = createReducer(
     return {
       ...state,
       budget: state.budget.map((b) =>
-        b.id === budget.id ? { ...b, createdAt: fixedDate } : b,
+        b.id === budget.id ? { ...b, ...budget, createdAt: fixedDate } : b,
       ),
     };
   }),
