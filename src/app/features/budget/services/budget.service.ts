@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Budget } from '../models /budget.model';
 
 @Injectable({
@@ -18,6 +18,12 @@ export class BudgetService {
   }
 
   update(budget: Partial<Budget>): Observable<Budget> {
-    return this.http.put<Budget>(`api/Budgets/${budget.id}`, budget);
+    return this.http
+      .put<Budget>(`api/Budgets/${budget.id}`, budget)
+      .pipe(
+        tap((updatedBudget) =>
+          console.log('HTTP response for update:', updatedBudget),
+        ),
+      );
   }
 }

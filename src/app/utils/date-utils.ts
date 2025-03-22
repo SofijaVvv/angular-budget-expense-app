@@ -3,6 +3,5 @@ export function fixDate(dateString: string | undefined): string {
     return 'N/A';
   }
   const date = new Date(dateString);
-  date.setHours(date.getHours() + 1);
-  return date.toLocaleString('de-DE');
+  return date.toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
 }

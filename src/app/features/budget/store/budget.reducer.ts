@@ -36,14 +36,20 @@ export const budgetReducer = createReducer(
     error,
     loading: false,
   })),
-  on(editBudget, (state, { budget }) => ({
+  on(editBudget, (state) => ({
     ...state,
     loading: true,
   })),
-  on(editBudgetSuccess, (state, { budget }) => ({
-    ...state,
-    budget: state.budget.map((b) => (b.id === budget.id ? budget : b)),
-  })),
+  on(editBudgetSuccess, (state, { budget }) => {
+    const fixedDate = fixDate(budget.createdAt);
+
+    return {
+      ...state,
+      budget: state.budget.map((b) =>
+        b.id === budget.id ? { ...b, createdAt: fixedDate } : b,
+      ),
+    };
+  }),
   on(editBudgetFailure, (state, { error }) => ({
     ...state,
     error,

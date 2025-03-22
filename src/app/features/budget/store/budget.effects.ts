@@ -38,7 +38,10 @@ export class BudgetEffects {
       ofType(editBudget),
       mergeMap((action) =>
         this.budgetService.update(action.budget).pipe(
-          map((budget) => editBudgetSuccess({ budget })),
+          map((updatedBudget) => {
+            const resultBudget = updatedBudget || action.budget;
+            return editBudgetSuccess({ budget: resultBudget });
+          }),
           catchError((error) => of(loadBudgetsFailure({ error }))),
         ),
       ),
