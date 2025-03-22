@@ -10,7 +10,7 @@ export class AccountService {
   constructor(private http: HttpClient) {}
 
   getAccountDetails(): Observable<Account> {
-    return this.http.get<Account>('api/Accounts/Details');
+    return this.http.get<Account>('api/Accounts/Details').pipe();
   }
 
   getAccountDetailsFormatted(): Observable<{

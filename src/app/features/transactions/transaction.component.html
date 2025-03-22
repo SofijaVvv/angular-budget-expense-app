@@ -13,7 +13,7 @@
       class="overflow-x-auto overflow-y-auto flex-1 md:max-h-[calc(100vh-200px)] max-h-[calc(100vh-240px)]"
     >
       <app-table
-        [tableData]="transactions"
+        [tableData]="(transactions$ | async) ?? []"
         [displayedColumns]="displayedColumns"
         [actions]="actions"
       />

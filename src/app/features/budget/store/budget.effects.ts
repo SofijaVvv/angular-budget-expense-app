@@ -8,6 +8,7 @@ import {
   createBudgetFailure,
   createBudgetSuccess,
   editBudget,
+  editBudgetFailure,
   editBudgetSuccess,
   loadBudgets,
   loadBudgetsFailure,
@@ -42,7 +43,7 @@ export class BudgetEffects {
             const resultBudget = updatedBudget || action.budget;
             return editBudgetSuccess({ budget: resultBudget });
           }),
-          catchError((error) => of(loadBudgetsFailure({ error }))),
+          catchError((error) => of(editBudgetFailure({ error }))),
         ),
       ),
     ),

@@ -22,7 +22,6 @@ import { TransactionFacade } from './services/transaction.facade';
 })
 export default class TransactionComponent implements OnInit {
   transactions$: Observable<Transaction[]>;
-  transactions: Transaction[] = [];
   isTransactionInputVisible = false;
   displayedColumns = [
     { key: 'id', label: 'ID' },
@@ -45,9 +44,6 @@ export default class TransactionComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTransactions();
-    this.transactions$.subscribe((data) => {
-      this.transactions = data;
-    });
   }
 
   loadTransactions() {
@@ -58,7 +54,7 @@ export default class TransactionComponent implements OnInit {
     this.isTransactionInputVisible = !this.isTransactionInputVisible;
   }
 
-  deleteTransaction(id: number): void {
+  async deleteTransaction(id: number): Promise<void> {
     Swal.fire({
       icon: 'question',
       title: 'Are you sure you want to delete transaction?',
@@ -68,11 +64,7 @@ export default class TransactionComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.transactionFacade.deleteTransaction(id);
-        void Swal.fire(
-          'Deleted!',
-          'Your transaction has been deleted.',
-          'success',
-        );
+        Swal.fire('Deleted!', 'Your transaction has been deleted.', 'success');
       }
     });
   }
