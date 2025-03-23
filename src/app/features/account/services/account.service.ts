@@ -20,7 +20,7 @@ export class AccountService {
     return this.getAccountDetails().pipe(
       map((data) => ({
         details: data,
-        currencyCode: data.currency === 'EUR' ? 'EUR' : 'USD',
+        currencyCode: data.currency ?? 'USD',
       })),
     );
   }
